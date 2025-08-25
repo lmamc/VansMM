@@ -1,4 +1,4 @@
-package com.vans.backend;
+package com.vans.backend.entity;
 import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,4 +1,4 @@
-package com.vans.backend;
+package com.vans.backend.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;

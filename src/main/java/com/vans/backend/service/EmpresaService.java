@@ -1,0 +1,31 @@
+package com.vans.backend.service;
+
+import org.springframework.stereotype.Service;
+import java.util.List;
+import com.vans.backend.entity.Empresa;
+import com.vans.backend.repository.EmpresaRepository;
+
+@Service
+public class EmpresaService {
+    private final EmpresaRepository empresaRepository;
+
+    public EmpresaService(EmpresaRepository empresaRepository) {
+        this.empresaRepository = empresaRepository;
+    }
+
+    public List<Empresa> getAllEmpresas() {
+        return empresaRepository.findAll();
+    }
+
+    public Empresa getEmpresaById(Integer id) {
+        return empresaRepository.findById(id).orElse(null);
+    }
+
+    public Empresa createEmpresa(Empresa empresa) {
+        return empresaRepository.save(empresa);
+    }
+
+    public void deleteEmpresa(Integer id) {
+        empresaRepository.deleteById(id);
+}
+}
