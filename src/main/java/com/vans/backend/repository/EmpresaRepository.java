@@ -6,3 +6,5 @@ import com.vans.backend.entity.Empresa;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 }
+
+
