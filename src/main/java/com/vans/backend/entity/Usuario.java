@@ -14,6 +14,9 @@ public class Usuario {
     private String nombre;
     private String telefono;
     private String apellido;
+    private String contraseña;
+    private String username;
+    private String email;
     private Integer edad;
 
 
@@ -29,6 +32,19 @@ public class Usuario {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public String getContraseña(){
+        return contraseña;
+    }
+
+
+    public String getUsername() {
+        return username;
     }
 
     public String getTelefono() {
@@ -53,6 +69,18 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public void setContraseña(String contraseña){
+        this.contraseña = contraseña;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setTelefono(String telefono) {

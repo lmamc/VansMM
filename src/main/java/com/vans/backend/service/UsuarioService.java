@@ -1,5 +1,8 @@
 package com.vans.backend.service;
 
+
+import com.vans.backend.exception.ResourceNotFoundException;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.vans.backend.entity.Usuario;
@@ -21,7 +24,22 @@ public class UsuarioService {
 
     // Obtener un usuario por ID
     public Usuario getUsuarioById(Integer id) {
-        return usuarioRepository.findById(id).orElse(null);
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+    }
+
+    // Obtener un usuario por nombre de usuario
+    public Usuario getUsuarioByUsername(String username) {
+        return usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+    }
+
+    public Usuario login(String username, String contraseña) {
+        Usuario usuario = usuarioRepository.findByUsername(username).orElse(null);
+        if (usuario != null && usuario.getContraseña().equals(contraseña)) {
+            return usuario;
+        }
+        return null;
     }
 
     // Guardar un usuario
