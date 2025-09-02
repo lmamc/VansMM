@@ -4,6 +4,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
+
+import jakarta.validation.constraints.Email;
+//import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -11,11 +19,23 @@ public class Usuario {
     @Column(name = "usuario_id")
     private Integer usuario_id;
     private Integer rol_id;
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
+    @NotBlank(message = "El teléfono no puede estar vacío")
+    @Pattern(regexp = "^(\\+56\\s?)?9\\d{8}$", message = "El formato del teléfono móvil no es válido. Ejemplo: +56912345678 o 912345678")
     private String telefono;
+    @NotBlank(message = "El apellido no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
     private String apellido;
+    @NotBlank(message = "La contraseña no puede estar vacía")
+    @Size(min = 6, max = 100, message = "La contraseña debe tener entre 6 y 100 caracteres")
     private String contraseña;
+    @NotBlank(message = "El nombre de usuario no puede estar vacío")
+    @Size(min = 2, max = 20, message = "El nombre de usuario debe tener entre 2 y 20 caracteres")
     private String username;
+    @NotBlank(message = "El correo electrónico no puede estar vacío")
+    @Email(message = "El correo electrónico debe ser válido")
     private String email;
     private Integer edad;
 

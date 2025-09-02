@@ -32,7 +32,7 @@ public class UsuarioServiceTest {
         usuario.setUsuario_id(1);
         when(usuarioRepository.findAll()).thenReturn(Collections.singletonList(usuario));
 
-        List<Usuario> usuarios = usuarioService.getAllUsuarios();
+        List<Usuario> usuarios = usuarioService.getAllUsers();
         assertEquals(1, usuarios.size());
         assertEquals(1, usuarios.get(0).getUsuario_id());
     }
@@ -43,7 +43,7 @@ public class UsuarioServiceTest {
         usuario.setUsuario_id(1);
         when(usuarioRepository.findById(1)).thenReturn(java.util.Optional.of(usuario));
 
-        Usuario found = usuarioService.getUsuarioById(1);
+        Usuario found = usuarioService.getUserById(1);
         assertNotNull(found);
         assertEquals(1, found.getUsuario_id());
     }

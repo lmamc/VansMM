@@ -11,7 +11,7 @@ import com.vans.backend.service.EmpresaService;
 @RequestMapping("/empresas")
 public class EmpresaController {
     private final EmpresaService empresaService;
-    // Constructor para inyectar el servicio
+    
     public EmpresaController(EmpresaService empresaService) {
         this.empresaService = empresaService;
     }
@@ -34,6 +34,11 @@ public class EmpresaController {
     @DeleteMapping("/{id}")
     public void deleteEmpresa(@PathVariable Integer id) {
         empresaService.deleteEmpresa(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateEmpresa(@PathVariable Integer id, @RequestBody Empresa empresa) {
+        empresaService.updateEmpresa(id, empresa);
     }
 
 }

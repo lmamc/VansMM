@@ -27,5 +27,15 @@ public class EmpresaService {
 
     public void deleteEmpresa(Integer id) {
         empresaRepository.deleteById(id);
-}
+    }
+
+    public void updateEmpresa(Integer id, Empresa empresaDetails) {
+        Empresa empresa = getEmpresaById(id);
+        if (empresa != null) {
+            empresa.setNombre(empresaDetails.getNombre());
+            empresa.setDireccion(empresaDetails.getDireccion());
+            empresa.setTelefono(empresaDetails.getTelefono());
+            empresaRepository.save(empresa);
+        }
+    }
 }

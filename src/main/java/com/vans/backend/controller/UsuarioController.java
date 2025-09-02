@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.vans.backend.entity.Usuario;
 import com.vans.backend.service.UsuarioService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -15,28 +16,28 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> getAllUsuarios() {
-        return usuarioService.getAllUsuarios();
+    public List<Usuario> getAllUsers() {
+        return usuarioService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public Usuario getUsuarioById(@PathVariable Integer id) {
-        return usuarioService.getUsuarioById(id);
+    public Usuario getUserById(@PathVariable Integer id) {
+        return usuarioService.getUserById(id);
     }
 
     @PostMapping
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.saveUsuario(usuario);
+    public Usuario createUser(@Valid @RequestBody Usuario usuario) {
+        return usuarioService.saveUser(usuario);
     }
 
     @PutMapping("/{id}")
-    public Usuario updateUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
+    public Usuario updateUser(@PathVariable Integer id, @RequestBody Usuario usuario) {
         usuario.setUsuario_id(id);
-        return usuarioService.saveUsuario(usuario);
+        return usuarioService.saveUser(usuario);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUsuario(@PathVariable Integer id) {
-        usuarioService.deleteUsuario(id);
+    public void deleteUser(@PathVariable Integer id) {
+        usuarioService.deleteUser(id);
     }
 }
