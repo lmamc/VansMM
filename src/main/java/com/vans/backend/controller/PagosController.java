@@ -22,7 +22,7 @@ public class PagosController {
 
     @GetMapping("/{id}")
     public Pagos getPagoById(@PathVariable Integer id) {
-        return pagosService.getPagosById(id);
+        return pagosService.getPagoById(id);
     }
 
     @PostMapping

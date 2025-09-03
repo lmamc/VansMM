@@ -9,6 +9,7 @@ import com.vans.backend.service.ConciertosService;
 
 @RestController
 @RequestMapping("/conciertos")
+@CrossOrigin(origins = "http://localhost:8100") 
 
 public class ConciertosController{
     private final ConciertosService conciertosService;

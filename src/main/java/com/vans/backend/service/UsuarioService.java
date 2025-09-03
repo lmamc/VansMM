@@ -1,66 +1,53 @@
 package com.vans.backend.service;
 
 import com.vans.backend.exception.ResourceNotFoundException;
-//import java.util.Optional; 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.vans.backend.entity.Usuario;
+import com.vans.backend.entity.Roles;
 import com.vans.backend.repository.UsuarioRepository;
+import com.vans.backend.repository.RolesRepository;
 
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
-    private static final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
-
+    @Autowired
+    private RolesRepository rolesRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Constructor para inyectar el repositorio
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
-    // Obtener todos los usuarios
     public List<Usuario> getAllUsers() {
         return usuarioRepository.findAll();
     }
 
-    // Obtener un usuario por ID
     public Usuario getUserById(Integer id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
     }
 
-    // Obtener un usuario por nombre de usuario
-    public Usuario getUserByUsername(String username) {
-        return usuarioRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-    }
-
-    public Usuario login(String username, String contraseña) {
-        Usuario usuario = getUserByUsername(username);
-        if (passwordEncoder.matches(contraseña, usuario.getContraseña())) {
-            return usuario;
+    public Usuario saveUser(Usuario usuario) {
+        if (usuario.getRol() != null && usuario.getRol().getRolId() != null) {
+            Roles rol = rolesRepository.findById(usuario.getRol().getRolId())
+                .orElseThrow(() -> new ResourceNotFoundException("Rol no encontrado"));
+            usuario.setRol(rol);
         }
-        return null;
+        // Encriptar la contraseña antes de guardar
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario register(Usuario usuario) {
-        usuario.setContraseña(passwordEncoder.encode(usuario.getContraseña()));
-        return usuarioRepository.save(usuario);
+        return saveUser(usuario);
     }
 
-    // Guardar un usuario
-    public Usuario saveUser(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
-
-    // Eliminar un usuario por ID
     public void deleteUser(Integer id) {
-        usuarioRepository.deleteById(id);
+        Usuario usuario = getUserById(id);
+        usuarioRepository.delete(usuario);
     }
 }

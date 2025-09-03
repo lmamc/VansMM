@@ -1,13 +1,8 @@
 package com.vans.backend.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -18,25 +13,47 @@ public class Asientos {
     @SequenceGenerator(name = "asientos_seq_gen", sequenceName = "asientos_seq", allocationSize = 1)
     @Column(name = "asiento_id")
     private Integer asiento_id;
-    private Integer vehiculo_id;
-    private Integer numero_asiento;
+
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id")
+    @JsonBackReference("vehiculo-asientos")
+    private Vehiculo vehiculo;
+
+    @ManyToOne
+    @JoinColumn(name = "viaje_id")
+    private Viajes viaje;
+
+    @OneToMany(mappedBy = "asiento")
+    @JsonManagedReference("asiento-reservas")
+    private List<Reserva> reservas;
+
+    @Column(name = "numero_asiento")
+    private String numeroAsiento;
+
+    @Column(name = "estado")
     private String estado;
 
-
-    public Asientos() {
-    }
+    public Asientos() {}
 
     public Integer getAsientoId() {
         return asiento_id;
     }
 
-    public Integer getVehiculoId() {
-        return vehiculo_id;
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 
-    public Integer getNumeroAsiento() {
-        return numero_asiento;
+    public Viajes getViaje() {
+        return viaje;
     }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public String getNumeroAsiento() { 
+    return numeroAsiento;
+}
 
     public String getEstado() {
         return estado;
@@ -46,13 +63,22 @@ public class Asientos {
         this.asiento_id = asiento_id;
     }
 
-    public void setVehiculoId(Integer vehiculo_id) {
-        this.vehiculo_id = vehiculo_id;
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
-    public void setNumeroAsiento(Integer numero_asiento) {
-        this.numero_asiento = numero_asiento;
+    public void setViaje(Viajes viaje) {
+        this.viaje = viaje;
     }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    public void setNumeroAsiento(String numeroAsiento) { 
+    this.numeroAsiento = numeroAsiento;
+    }
+
 
     public void setEstado(String estado) {
         this.estado = estado;

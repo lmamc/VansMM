@@ -1,14 +1,7 @@
 package com.vans.backend.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
-
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "VIAJES")
@@ -18,31 +11,45 @@ public class Viajes {
     @SequenceGenerator(name = "viajes_seq_gen", sequenceName = "viajes_seq", allocationSize = 1)
     @Column(name = "viaje_id")
     private Integer viaje_id;
-    private Integer vehiculo_id;
-    private Integer concierto_id;
+
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id")
+    @JsonBackReference("vehiculo-viajes")
+    private Vehiculo vehiculo;
+
+    @ManyToOne
+    @JoinColumn(name = "concierto_id")
+    @JsonBackReference("concierto-viajes")
+    private Conciertos concierto;
+
+    @Column(name = "origen")
     private String origen;
+
+    @Column(name = "destino")
     private String destino;
-    private String fechaSalida;
-    private String fechaLlegada;
+
+    @Column(name = "fecha_salida")
+    private LocalDateTime fechaSalida;
+
+    @Column(name = "fecha_llegada")
+    private LocalDateTime fechaLlegada;
+
+    @Column(name = "estado")
     private String estado;
 
 
-    //constructor
-    public Viajes() {
+    public Viajes() {}
 
-    }
-
-    //getters y setter 
     public Integer getViaje_id() {
         return viaje_id;
     }
 
-    public Integer getVehiculo_id() {
-        return vehiculo_id;
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 
-    public Integer getConcierto_id() {
-        return concierto_id;
+    public Conciertos getConcierto() {
+        return concierto;
     }
 
     public String getOrigen() {
@@ -53,11 +60,11 @@ public class Viajes {
         return destino;
     }
 
-    public String getFechaSalida() {
+    public LocalDateTime getFechaSalida() {
         return fechaSalida;
     }
 
-    public String getFechaLlegada() {
+    public LocalDateTime getFechaLlegada() {
         return fechaLlegada;
     }
 
@@ -69,31 +76,31 @@ public class Viajes {
         this.viaje_id = viaje_id;
     }
 
-    public void setVehiculo_id(Integer vehiculo_id) {
-        this.vehiculo_id = vehiculo_id;
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
-    public void setConcierto_id(Integer concierto_id) {
-        this.concierto_id = concierto_id;
+    public void setConcierto(Conciertos concierto) {
+        this.concierto = concierto;
     }
 
     public void setOrigen(String origen) {
         this.origen = origen;
     }
+
     public void setDestino(String destino) {
         this.destino = destino;
     }
 
-    public void setFechaSalida(String fechaSalida) {
+    public void setFechaSalida(LocalDateTime fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public void setFechaLlegada(String fechaLlegada) {
+    public void setFechaLlegada(LocalDateTime fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
 }

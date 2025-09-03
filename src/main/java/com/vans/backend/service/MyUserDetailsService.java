@@ -22,6 +22,6 @@ public class MyUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-        return new User(usuario.getUsername(), usuario.getContraseña(), new ArrayList<>());
+        return new User(usuario.getUsername(), usuario.getContrasena(), new ArrayList<>());
     }
 }

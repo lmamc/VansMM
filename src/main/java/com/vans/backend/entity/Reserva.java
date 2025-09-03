@@ -1,13 +1,7 @@
 package com.vans.backend.entity;
 import java.time.LocalDateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -18,33 +12,43 @@ public class Reserva {
     @SequenceGenerator(name = "reservas_seq_gen", sequenceName = "reservas_seq", allocationSize = 1)
     @Column(name = "reserva_id")
     private Integer reserva_id;
-    private Integer viaje_id;
-    private Integer usuario_id;
-    private Integer asiento_id;
+
+    @ManyToOne
+    @JoinColumn(name = "viaje_id")
+    private Viajes viaje;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    @JsonBackReference("usuario-reservas")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "asiento_id")
+    @JsonBackReference("asiento-reservas")
+    private Asientos asiento;
+
+    @Column(name = "fecha_reserva")
     private LocalDateTime fecha_reserva;
+
+    @Column(name = "estado")
     private String estado;
 
-
-    //constructor
-    public Reserva() {
-    }
-    
-    //getter y sett
+    public Reserva() {}
 
     public Integer getReserva_id() {
         return reserva_id;
     }
 
-    public Integer getViaje_id() {
-        return viaje_id;
+    public Viajes getViaje() {
+        return viaje;
     }
 
-    public Integer getUsuario_id() {
-        return usuario_id;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public Integer getAsiento_id() {
-        return asiento_id;
+    public Asientos getAsiento() {
+        return asiento;
     }
 
     public LocalDateTime getFecha_reserva() {
@@ -59,16 +63,16 @@ public class Reserva {
         this.reserva_id = reserva_id;
     }
 
-    public void setViaje_id(Integer viaje_id) {
-        this.viaje_id = viaje_id;
+    public void setViaje(Viajes viaje) {
+        this.viaje = viaje;
     }
 
-    public void setUsuario_id(Integer usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public void setAsiento_id(Integer asiento_id) {
-        this.asiento_id = asiento_id;
+    public void setAsiento(Asientos asiento) {
+        this.asiento = asiento;
     }
 
     public void setFecha_reserva(LocalDateTime fecha_reserva) {

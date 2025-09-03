@@ -1,4 +1,5 @@
 package com.vans.backend.entity;
+
 import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,12 +27,8 @@ public class Bandas {
     @Column(name = "PAIS_ORIGEN")
     private String paisOrigen;
 
-    @Column(name = "FECHA_CONCIERTO")
-    private LocalDateTime fechaConcierto;
-
     public Bandas() {
     }
-
 
     public Integer getBanda_id() {
         return banda_id;
@@ -40,7 +37,7 @@ public class Bandas {
     public void setBanda_id(Integer banda_id) {
         this.banda_id = banda_id;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -63,13 +60,5 @@ public class Bandas {
 
     public void setPaisOrigen(String paisOrigen) {
         this.paisOrigen = paisOrigen;
-    }
-
-    public LocalDateTime getFechaConcierto() {
-        return fechaConcierto;
-    }
-
-    public void setFechaConcierto(LocalDateTime fechaConcierto) {
-        this.fechaConcierto = fechaConcierto;
     }
 }
