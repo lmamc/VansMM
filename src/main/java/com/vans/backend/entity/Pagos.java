@@ -5,10 +5,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+
+
+
 @Entity
 @Table(name = "PAGOS")
 public class Pagos {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pagos_seq_gen")
+    @SequenceGenerator(name = "pagos_seq_gen", sequenceName = "pagos_seq", allocationSize = 1)
     @Column(name = "pago_id")
     private Integer pago_id;
     private Integer empresa_id;

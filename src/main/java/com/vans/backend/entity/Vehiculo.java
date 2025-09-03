@@ -4,11 +4,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+
 @Entity
 @Table(name = "VEHICULOS")
 public class Vehiculo {
     // Atributos
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehiculos_seq_gen")
+    @SequenceGenerator(name = "vehiculos_seq_gen", sequenceName = "vehiculos_seq", allocationSize = 1)
     @Column(name = "vehiculo_id")
     private Integer vehiculo_id;
     private Integer concierto_id;

@@ -2,6 +2,10 @@ package com.vans.backend.service;
 
 import com.vans.backend.exception.ResourceNotFoundException;
 //import java.util.Optional; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.vans.backend.entity.Usuario;
@@ -10,6 +14,10 @@ import com.vans.backend.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private static final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Constructor para inyectar el repositorio
     public UsuarioService(UsuarioRepository usuarioRepository) {
@@ -34,11 +42,16 @@ public class UsuarioService {
     }
 
     public Usuario login(String username, String contraseña) {
-        Usuario usuario = usuarioRepository.findByUsername(username).orElse(null);
-        if (usuario != null && usuario.getContraseña().equals(contraseña)) {
+        Usuario usuario = getUserByUsername(username);
+        if (passwordEncoder.matches(contraseña, usuario.getContraseña())) {
             return usuario;
         }
         return null;
+    }
+
+    public Usuario register(Usuario usuario) {
+        usuario.setContraseña(passwordEncoder.encode(usuario.getContraseña()));
+        return usuarioRepository.save(usuario);
     }
 
     // Guardar un usuario
