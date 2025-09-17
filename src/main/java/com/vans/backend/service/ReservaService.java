@@ -17,59 +17,65 @@ import java.util.List;
 @Service
 public class ReservaService {
 
-    @Autowired
-    private ReservaRepository reservaRepository;
-    @Autowired
-    private ViajesRepository viajesRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private AsientosRepository asientosRepository;
+        @Autowired
+        private ReservaRepository reservaRepository;
+        @Autowired
+        private ViajesRepository viajesRepository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
+        @Autowired
+        private AsientosRepository asientosRepository;
 
-    public List<Reserva> getAllReservas() {
-        return reservaRepository.findAll();
-    }
+        public List<Reserva> getAllReservas() {
+                return reservaRepository.findAll();
+        }
 
-    public Reserva getReservaById(Integer id) {
-        return reservaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada con id: " + id));
-    }
+        public Reserva getReservaById(Integer id) {
+                return reservaRepository.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException(
+                                                "Reserva no encontrada con id: " + id));
+        }
 
-    public Reserva createReserva(Reserva reserva) {
-        Viajes viaje = viajesRepository.findById(reserva.getViaje().getViaje_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado"));
-        Usuario usuario = usuarioRepository.findById(reserva.getUsuario().getUsuario_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-        Asientos asiento = asientosRepository.findById(reserva.getAsiento().getAsientoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Asiento no encontrado"));
+        public Reserva createReserva(Reserva reserva) {
+                Viajes viaje = viajesRepository.findById(reserva.getViaje().getViaje_id())
+                                .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado"));
+                Usuario usuario = usuarioRepository.findById(reserva.getUsuario().getUsuario_id())
+                                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                Asientos asiento = asientosRepository.findById(reserva.getAsiento().getAsientoId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Asiento no encontrado"));
 
-        reserva.setViaje(viaje);
-        reserva.setUsuario(usuario);
-        reserva.setAsiento(asiento);
-        return reservaRepository.save(reserva);
-    }
+                reserva.setViaje(viaje);
+                reserva.setUsuario(usuario);
+                reserva.setAsiento(asiento);
 
-    public Reserva updateReserva(Integer id, Reserva reservaDetails) {
-        Reserva reserva = getReservaById(id);
+                Reserva nuevaReserva = reservaRepository.save(reserva);
+                asiento.setEstado("ocupado");
+                asientosRepository.save(asiento);
 
-        Viajes viaje = viajesRepository.findById(reservaDetails.getViaje().getViaje_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado"));
-        Usuario usuario = usuarioRepository.findById(reservaDetails.getUsuario().getUsuario_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-        Asientos asiento = asientosRepository.findById(reservaDetails.getAsiento().getAsientoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Asiento no encontrado"));
+                return nuevaReserva;
+        }
 
-        reserva.setViaje(viaje);
-        reserva.setUsuario(usuario);
-        reserva.setAsiento(asiento);
-        reserva.setFecha_reserva(reservaDetails.getFecha_reserva());
-        reserva.setEstado(reservaDetails.getEstado());
+        public Reserva updateReserva(Integer id, Reserva reservaDetails) {
+                Reserva reserva = getReservaById(id);
 
-        return reservaRepository.save(reserva);
-    }
+                Viajes viaje = viajesRepository.findById(reservaDetails.getViaje().getViaje_id())
+                                .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado"));
+                Usuario usuario = usuarioRepository.findById(reservaDetails.getUsuario().getUsuario_id())
+                                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                Asientos asiento = asientosRepository.findById(reservaDetails.getAsiento().getAsientoId())
+                                .orElseThrow(() -> new ResourceNotFoundException("Asiento no encontrado"));
 
-    public void deleteReserva(Integer id) {
-        Reserva reserva = getReservaById(id);
-        reservaRepository.delete(reserva);
-    }
+                reserva.setViaje(viaje);
+                reserva.setUsuario(usuario);
+                reserva.setAsiento(asiento);
+                reserva.setFecha_reserva(reservaDetails.getFecha_reserva());
+                reserva.setEstado(reservaDetails.getEstado());
+
+                return reservaRepository.save(reserva);
+        }
+
+        public void deleteReserva(Integer id) {
+                Reserva reserva = getReservaById(id);
+                reservaRepository.delete(reserva);
+        }
 }

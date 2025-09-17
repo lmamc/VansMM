@@ -2,6 +2,7 @@ package com.vans.backend.security;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
+import com.vans.backend.entity.Usuario;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -13,9 +14,11 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String generateToken(String username) {
+    public String generateToken(Usuario usuario) {
         return Jwts.builder()
-            .setSubject(username)
+            .setSubject(usuario.getUsername())
+            .claim("usuario_id", usuario.getUsuario_id())
+            .claim("rol", usuario.getRol() != null ? usuario.getRol().getNombre() : null)
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + 86400000)) 
             .signWith(SignatureAlgorithm.HS256, secretKey)

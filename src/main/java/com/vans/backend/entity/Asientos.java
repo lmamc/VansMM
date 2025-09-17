@@ -52,9 +52,9 @@ public class Asientos {
     }
 
     public String getNumeroAsiento() { 
-    return numeroAsiento;
-}
-
+        return numeroAsiento;
+    }
+    
     public String getEstado() {
         return estado;
     }

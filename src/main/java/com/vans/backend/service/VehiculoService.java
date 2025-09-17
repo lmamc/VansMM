@@ -1,8 +1,13 @@
+
 package com.vans.backend.service;
 
+import com.vans.backend.repository.ViajesRepository;
 import com.vans.backend.entity.Conciertos;
 import com.vans.backend.entity.Empresa;
 import com.vans.backend.entity.Vehiculo;
+import com.vans.backend.entity.Viajes;
+import com.vans.backend.entity.Asientos;
+import com.vans.backend.repository.AsientosRepository;
 import com.vans.backend.exception.ResourceNotFoundException;
 import com.vans.backend.repository.ConciertosRepository;
 import com.vans.backend.repository.EmpresaRepository;
@@ -19,6 +24,10 @@ public class VehiculoService {
     private EmpresaRepository empresaRepository;
     @Autowired
     private ConciertosRepository conciertosRepository;
+    @Autowired
+    private AsientosRepository asientosRepository;
+    @Autowired
+    private ViajesRepository viajesRepository;
 
     public VehiculoService(VehiculoRepository vehiculoRepository) {
         this.vehiculoRepository = vehiculoRepository;
@@ -32,6 +41,39 @@ public class VehiculoService {
 
         vehiculo.setEmpresa(empresa);
         vehiculo.setConcierto(concierto);
+        Vehiculo savedVehiculo = vehiculoRepository.save(vehiculo);
+
+        // Crear asientos automáticamente según la capacidad
+        for (int i = 1; i <= savedVehiculo.getCapacidad(); i++) {
+            Asientos asiento = new Asientos();
+            asiento.setVehiculo(savedVehiculo);
+            asiento.setNumeroAsiento(String.valueOf(i));
+            asiento.setEstado("disponible");
+            asiento.setViaje(null);
+            asientosRepository.save(asiento);
+        }
+
+        return savedVehiculo;
+    }
+
+    public Viajes saveViaje(Viajes viaje) {
+    return viajesRepository.save(viaje);
+    }
+
+    public Viajes getViajeById(Integer id) {
+        return viajesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado con id: " + id));
+    }
+
+    public Asientos saveAsiento(Asientos asiento) {
+        return asientosRepository.save(asiento);
+    }
+    public Asientos getAsientoById(Integer id) {
+        return asientosRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Asiento no encontrado con id: " + id));
+    }
+
+    public Vehiculo save(Vehiculo vehiculo) {
         return vehiculoRepository.save(vehiculo);
     }
 

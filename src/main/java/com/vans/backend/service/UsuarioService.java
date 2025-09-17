@@ -12,6 +12,10 @@ import com.vans.backend.repository.RolesRepository;
 
 @Service
 public class UsuarioService {
+    public Usuario getUserByUsername(String username) {
+        return usuarioRepository.findByUsername(username)
+            .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+    }
     private final UsuarioRepository usuarioRepository;
     @Autowired
     private RolesRepository rolesRepository;

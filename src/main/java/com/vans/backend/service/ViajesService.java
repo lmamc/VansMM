@@ -13,6 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import com.vans.backend.dto.ViajeDTO;
+import com.vans.backend.dto.VehiculoDTO;
+import java.util.stream.Collectors;
+
 @Service
 public class ViajesService {
 
@@ -48,6 +52,36 @@ public class ViajesService {
 
         return viajesRepository.save(viaje);
     }
+
+
+    public List<ViajeDTO> getAllViajesDTO() {
+    return viajesRepository.findAll().stream().map(viaje -> {
+        ViajeDTO dto = new ViajeDTO();
+        dto.setViaje_id(viaje.getViaje_id());
+        dto.setOrigen(viaje.getOrigen());
+        dto.setDestino(viaje.getDestino());
+        dto.setPrecio(viaje.getPrecio().doubleValue());
+        dto.setAsientos_disponibles(viaje.getAsientos_disponibles());
+        dto.setFechaSalida(viaje.getFechaSalida());
+        dto.setFechaLlegada(viaje.getFechaLlegada());
+        dto.setEstado(viaje.getEstado());
+        // Mapea el vehículo si tienes VehiculoDTO
+        Vehiculo vehiculo = viaje.getVehiculo();
+        if (vehiculo != null) {
+            VehiculoDTO vehiculoDTO = new VehiculoDTO();
+            vehiculoDTO.setVehiculo_id(vehiculo.getVehiculo_id());
+            vehiculoDTO.setPatente(vehiculo.getPatente());
+            vehiculoDTO.setModelo(vehiculo.getModelo());
+            vehiculoDTO.setTipo(vehiculo.getModelo()); // Ajusta si tienes tipo
+            dto.setVehiculo(vehiculoDTO);
+            // Aquí asignas el nombre de la empresa
+            if (vehiculo.getEmpresa() != null) {
+                dto.setEmpresa(vehiculo.getEmpresa().getNombre());
+            }
+        }
+        return dto;
+    }).collect(Collectors.toList());
+}
 
     @Transactional
     public void deleteViaje(Integer id) {

@@ -1,5 +1,7 @@
 package com.vans.backend.entity;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -28,6 +30,12 @@ public class Viajes {
     @Column(name = "destino")
     private String destino;
 
+    @Column(name = "precio")
+    private BigDecimal precio;
+
+    @Column(name = "asientos_disponibles")
+    private Integer asientos_disponibles;
+
     @Column(name = "fecha_salida")
     private LocalDateTime fechaSalida;
 
@@ -50,6 +58,14 @@ public class Viajes {
 
     public Conciertos getConcierto() {
         return concierto;
+    }
+
+    public Integer getAsientos_disponibles() {
+        return asientos_disponibles;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
     }
 
     public String getOrigen() {
@@ -76,8 +92,16 @@ public class Viajes {
         this.viaje_id = viaje_id;
     }
 
+    public void setAsientos_disponibles(Integer asientos_disponibles){
+        this.asientos_disponibles = asientos_disponibles;
+    }
+
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
     }
 
     public void setConcierto(Conciertos concierto) {

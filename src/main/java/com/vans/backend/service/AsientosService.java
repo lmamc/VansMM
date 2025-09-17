@@ -57,6 +57,12 @@ public class AsientosService {
         return asientosRepository.save(asiento);
     }
 
+
+    public Viajes getViajeById(Integer id) {
+    return viajesRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado con id: " + id));
+}
+
     public void deleteAsiento(Integer id) {
         Asientos asiento = getAsientoById(id);
         asientosRepository.delete(asiento);

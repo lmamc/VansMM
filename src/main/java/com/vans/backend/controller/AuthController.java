@@ -29,9 +29,10 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         try {
             authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getContraseña())
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getContrasena())
             );
-            String token = jwtUtil.generateToken(loginRequest.getUsername());
+            Usuario usuario = usuarioService.getUserByUsername(loginRequest.getUsername());
+            String token = jwtUtil.generateToken(usuario);
             return ResponseEntity.ok(token);
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");

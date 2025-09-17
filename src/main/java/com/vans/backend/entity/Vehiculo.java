@@ -1,13 +1,13 @@
 package com.vans.backend.entity;
+
 import jakarta.persistence.*;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
 
 @Entity
 @Table(name = "VEHICULOS")
@@ -19,21 +19,29 @@ public class Vehiculo {
     @JsonProperty("vehiculo_id")
     private Integer vehiculo_id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "empresa_id")
-    @JsonBackReference("empresa-vehiculos")
     private Empresa empresa;
+
+    /*
+     * @ManyToOne(fetch = FetchType.EAGER)
+     * 
+     * @JoinColumn(name = "empresa_id")
+     * 
+     * @JsonBackReference("empresa-vehiculos")
+     * private Empresa empresa;
+     */
 
     @ManyToOne
     @JoinColumn(name = "concierto_id")
     private Conciertos concierto;
 
     @OneToMany(mappedBy = "vehiculo")
-    @JsonManagedReference("vehiculo-viajes")
+    @JsonIgnore
     private List<Viajes> viajes;
 
     @OneToMany(mappedBy = "vehiculo")
-    @JsonManagedReference("vehiculo-asientos") 
+    @JsonManagedReference("vehiculo-asientos")
     private List<Asientos> asientos;
 
     @Column(name = "modelo")
@@ -48,8 +56,8 @@ public class Vehiculo {
     @Column(name = "estado")
     private String estado;
 
-    
-    public Vehiculo(){}
+    public Vehiculo() {
+    }
 
     // --- GETTERS Y SETTERS CORREGIDOS ---
 
