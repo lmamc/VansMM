@@ -88,7 +88,6 @@ public class VehiculoService {
 
     public Vehiculo updateVehiculo(Integer id, Vehiculo vehiculoDetails) {
         Vehiculo vehiculo = getVehiculoById(id);
-        // Lógica de actualización similar a createVehiculo
         vehiculo.setModelo(vehiculoDetails.getModelo());
         vehiculo.setCapacidad(vehiculoDetails.getCapacidad());
         vehiculo.setPatente(vehiculoDetails.getPatente());

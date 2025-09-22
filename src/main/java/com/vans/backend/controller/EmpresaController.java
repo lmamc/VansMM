@@ -26,7 +26,7 @@ public class EmpresaController {
     return empresaService.getEmpresaById(id);
 }
 
-    @PostMapping
+    @PostMapping(consumes = {"application/json", "application/json;charset=UTF-8"})
     public Empresa createEmpresa(@RequestBody Empresa empresa) {
         return empresaService.createEmpresa(empresa);
     }

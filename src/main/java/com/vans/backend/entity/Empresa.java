@@ -32,6 +32,7 @@ public class Empresa {
 
     private String nombre;
     private String direccion;
+    private String horario;
     private Integer telefono;
 
     public Empresa() {}
@@ -48,6 +49,10 @@ public class Empresa {
         return conciertos;
     }
 
+    public String getHorario() {
+        return horario;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -62,6 +67,10 @@ public class Empresa {
 
     public void setEmpresaId(Integer empresa_id) {
         this.empresa_id = empresa_id;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
     }
 
     public void setVehiculos(List<Vehiculo> vehiculos) {

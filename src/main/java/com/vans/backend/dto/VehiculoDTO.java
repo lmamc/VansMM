@@ -13,7 +13,6 @@ public class VehiculoDTO {
     private String patente;
     private String estado;
     public void setTipo(String modelo2) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setTipo'");
     }
 }

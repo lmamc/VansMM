@@ -19,19 +19,17 @@ public class Vehiculo {
     @JsonProperty("vehiculo_id")
     private Integer vehiculo_id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "empresa_id")
+    private Empresa empresa; */
+
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    @JsonBackReference("empresa-vehiculos")
     private Empresa empresa;
 
-    /*
-     * @ManyToOne(fetch = FetchType.EAGER)
-     * 
-     * @JoinColumn(name = "empresa_id")
-     * 
-     * @JsonBackReference("empresa-vehiculos")
-     * private Empresa empresa;
-     */
-
+    
     @ManyToOne
     @JoinColumn(name = "concierto_id")
     private Conciertos concierto;
