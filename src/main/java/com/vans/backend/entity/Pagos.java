@@ -5,15 +5,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+
+import jakarta.persistence.*;
+
+
+
 @Entity
 @Table(name = "PAGOS")
 public class Pagos {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pagos_seq_gen")
+    @SequenceGenerator(name = "pagos_seq_gen", sequenceName = "pagos_seq", allocationSize = 1)
     @Column(name = "pago_id")
     private Integer pago_id;
-    private Integer empresa_id;
-    private Integer reserva_id;
-    private Integer usuario_id;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
+
+    @ManyToOne
+    @JoinColumn(name = "reserva_id")
+    private Reserva reserva;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
     private Integer tipo_pago;
     private String estado;
     private Integer monto;
@@ -23,20 +43,21 @@ public class Pagos {
     public Pagos() {
     }
 
+    // Getters
     public Integer getPago_id() {
         return pago_id;
     }
 
-    public Integer getEmpresa_id() {
-        return empresa_id;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public Integer getReserva_id() {
-        return reserva_id;
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public Integer getUsuario_id() {
-        return usuario_id;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public Integer getTipo_pago() {
@@ -55,21 +76,21 @@ public class Pagos {
         return fecha_pago;
     }
 
-
+    // Setters
     public void setPago_id(Integer pago_id) {
         this.pago_id = pago_id;
     }
     
-    public void setEmpresa_id(Integer empresa_id) {
-        this.empresa_id = empresa_id;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
-    public void setReserva_id(Integer reserva_id) {
-        this.reserva_id = reserva_id;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
-    public void setUsuario_id(Integer usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void setTipo_pago(Integer tipo_pago) {
@@ -87,5 +108,4 @@ public class Pagos {
     public void setFecha_pago(LocalDateTime fecha_pago) {
         this.fecha_pago = fecha_pago;
     }
-
 }

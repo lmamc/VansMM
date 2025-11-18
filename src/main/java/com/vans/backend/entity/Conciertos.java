@@ -1,35 +1,63 @@
 package com.vans.backend.entity;
 import java.time.LocalDateTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "CONCIERTOS")
 public class Conciertos {
     @Id
     @Column(name = "concierto_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "conciertos_seq_gen")
+    @SequenceGenerator(name = "conciertos_seq_gen", sequenceName = "conciertos_seq", allocationSize = 1)
     private Integer concierto_id;
-    private Integer empresa_id;
-    private Integer banda_id;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    @JsonBackReference("empresa-conciertos")
+    private Empresa empresa;
+
+    @ManyToOne
+    @JoinColumn(name = "banda_id")
+    private Bandas banda;
+
+    @OneToMany(mappedBy = "concierto")
+    @JsonManagedReference("concierto-viajes")
+    private List<Viajes> viajes;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "direccion")
     private String direccion;
+
+    @Column(name = "fecha")
     private LocalDateTime fecha;
 
-
-    public Conciertos() {
-    }
+    public Conciertos() {}
 
     public Integer getConcierto_id() {
         return concierto_id;
     }
 
-    public Integer getEmpresa_id() {
-        return empresa_id;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public Integer getBanda_id() {
-        return banda_id;
+    public Bandas getBanda() {
+        return banda;
+    }
+
+    public List<Viajes> getViajes() {
+        return viajes;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public String getDireccion() {
@@ -44,12 +72,20 @@ public class Conciertos {
         this.concierto_id = concierto_id;
     }
 
-    public void setEmpresa_id(Integer empresa_id) {
-        this.empresa_id = empresa_id;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
-    public void setBanda_id(Integer banda_id) {
-        this.banda_id = banda_id;
+    public void setBanda(Bandas banda) {
+        this.banda = banda;
+    }
+
+    public void setViajes(List<Viajes> viajes) {
+        this.viajes = viajes;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setDireccion(String direccion) {
