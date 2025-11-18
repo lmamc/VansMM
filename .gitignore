@@ -13,17 +13,18 @@ target/
 .springBeans
 .sts4-cache
 
-
-### Credencial 
-
+### Credenciales y Configuración Sensible ###
 src/main/resources/application.properties
-
+.env
+*.env
+!.env.example
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*.class
 
 ### NetBeans ###
 /nbproject/private/
@@ -37,6 +38,53 @@ build/
 
 ### VS Code ###
 .vscode/
+*.code-workspace
+
+### Sistema Operativo ###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+### Logs ###
+*.log
+logs/
+log/
+
+### Backup files ###
+*.bak
+*.swp
+*.swo
+*~
+
+### Maven ###
+.mvn/
+mvnw
+mvnw.cmd
+
+### Testing ###
+/test-output/
+*.class
+
+### Database ###
+*.db
+*.sqlite
+*.sqlite3
+
+### Postman ###
+# Keep .postman_collection.json but ignore environment files
+*.postman_environment.json
+
+### Otros ###
+.metadata/
+bin/
+tmp/
+*.tmp
+*.temp
 
 
 
