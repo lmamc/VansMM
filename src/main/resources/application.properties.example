@@ -1,0 +1,41 @@
+# ===================================================================
+# SPRING BOOT CONFIGURATION - EXAMPLE FILE
+# ===================================================================
+# Este es un archivo de ejemplo. Para usarlo:
+# 1. Copia este archivo y renómbralo a: application.properties
+# 2. Reemplaza los valores de ejemplo con tus credenciales reales
+# 3. NUNCA subas el archivo application.properties a Git
+# ===================================================================
+
+# JWT Configuration
+# Genera un secret seguro con: openssl rand -base64 64
+jwt.secret=${JWT_SECRET:your-super-secret-jwt-key-at-least-256-bits-long-for-production}
+
+# Oracle Database Configuration
+spring.datasource.url=${DB_URL:jdbc:oracle:thin:@localhost:1521/XEPDB1}
+spring.datasource.username=${DB_USERNAME:your_database_username}
+spring.datasource.password=${DB_PASSWORD:your_database_password}
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+
+# JPA/Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=${SHOW_SQL:false}
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.OracleDialect
+spring.jpa.properties.hibernate.format_sql=true
+
+# CORS Configuration
+cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:8100,http://localhost:4200}
+
+# Server Configuration
+server.port=${SERVER_PORT:8080}
+
+# Actuator Configuration (Seguridad)
+management.endpoints.web.exposure.include=health,info
+management.endpoint.health.show-details=when-authorized
+management.health.db.enabled=true
+
+# Logging Configuration
+logging.level.root=INFO
+logging.level.com.vans.backend=${LOG_LEVEL:INFO}
+logging.level.org.springframework.web=${LOG_LEVEL_WEB:WARN}
+logging.level.org.hibernate.SQL=${SQL_LOG_LEVEL:WARN}
