@@ -29,11 +29,6 @@ public class Vehiculo {
     @JsonBackReference("empresa-vehiculos")
     private Empresa empresa;
 
-    
-    @ManyToOne
-    @JoinColumn(name = "concierto_id")
-    private Conciertos concierto;
-
     @OneToMany(mappedBy = "vehiculo")
     @JsonIgnore
     private List<Viajes> viajes;
@@ -73,14 +68,6 @@ public class Vehiculo {
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
-    }
-
-    public Conciertos getConcierto() {
-        return concierto;
-    }
-
-    public void setConcierto(Conciertos concierto) {
-        this.concierto = concierto;
     }
 
     public List<Viajes> getViajes() {

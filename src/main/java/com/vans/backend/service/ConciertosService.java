@@ -35,7 +35,6 @@ public class ConciertosService {
     public Conciertos createConcierto(Conciertos concierto) {
         Empresa empresa = empresaRepository.findById(concierto.getEmpresa().getEmpresaId())
             .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada"));
-        // --- CORRECCIÓN AQUÍ ---
         Bandas banda = bandasRepository.findById(concierto.getBanda().getBanda_id())
             .orElseThrow(() -> new ResourceNotFoundException("Banda no encontrada"));
 
@@ -48,7 +47,6 @@ public class ConciertosService {
         Conciertos concierto = getConciertoById(id);
         Empresa empresa = empresaRepository.findById(conciertoDetails.getEmpresa().getEmpresaId())
             .orElseThrow(() -> new ResourceNotFoundException("Empresa no encontrada"));
-        // --- CORRECCIÓN AQUÍ ---
         Bandas banda = bandasRepository.findById(conciertoDetails.getBanda().getBanda_id())
             .orElseThrow(() -> new ResourceNotFoundException("Banda no encontrada"));
 

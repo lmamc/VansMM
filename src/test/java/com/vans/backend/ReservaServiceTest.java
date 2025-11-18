@@ -40,7 +40,6 @@ public class ReservaServiceTest {
 
     @Test
     public void testCreateReserva() {
-        // Instancia y setea los objetos relacionados
         Usuario usuario = new Usuario();
         usuario.setUsuario_id(1);
 
@@ -57,7 +56,6 @@ public class ReservaServiceTest {
         reserva.setFecha_reserva(LocalDateTime.now());
         reserva.setEstado("Reservado");
 
-        // Mockea los repositorios para devolver los objetos relacionados
         when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
         when(viajesRepository.findById(2)).thenReturn(Optional.of(viaje));
         when(asientosRepository.findById(3)).thenReturn(Optional.of(asiento));

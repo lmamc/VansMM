@@ -41,7 +41,6 @@ public class UsuarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Rol no encontrado"));
             usuario.setRol(rol);
         }
-        // Encriptar la contraseña antes de guardar
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         return usuarioRepository.save(usuario);
     }

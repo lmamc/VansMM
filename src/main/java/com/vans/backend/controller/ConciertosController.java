@@ -29,7 +29,6 @@ public class ConciertosController {
         dto.setConcierto_id(concierto.getConcierto_id());
         dto.setDireccion(concierto.getDireccion());
         dto.setFecha(concierto.getFecha());
-        // BandaDTO
         com.vans.backend.dto.BandaDTO bandaDTO = new com.vans.backend.dto.BandaDTO();
         if (concierto.getBanda() != null) {
             bandaDTO.setBanda_id(concierto.getBanda().getBanda_id());
@@ -38,7 +37,6 @@ public class ConciertosController {
             bandaDTO.setPaisOrigen(concierto.getBanda().getPaisOrigen());
         }
         dto.setBanda(bandaDTO);
-        // ViajesDTO
         java.util.List<com.vans.backend.dto.ViajeDTO> viajesDTO = new java.util.ArrayList<>();
         if (concierto.getViajes() != null) {
             for (com.vans.backend.entity.Viajes viaje : concierto.getViajes()) {
@@ -51,7 +49,6 @@ public class ConciertosController {
                 viajeDTO.setFechaSalida(viaje.getFechaSalida());
                 viajeDTO.setFechaLlegada(viaje.getFechaLlegada());
                 viajeDTO.setEstado(viaje.getEstado());
-                // VehiculoDTO
                 com.vans.backend.entity.Vehiculo vehiculo = viaje.getVehiculo();
                 com.vans.backend.dto.VehiculoDTO vehiculoDTO = null;
                 if (vehiculo != null) {

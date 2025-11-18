@@ -3,6 +3,7 @@ package com.vans.backend.service;
 import com.vans.backend.entity.Viajes;
 import com.vans.backend.entity.Vehiculo;
 import com.vans.backend.entity.Conciertos;
+import com.vans.backend.entity.Asientos;
 import com.vans.backend.repository.ViajesRepository;
 import com.vans.backend.repository.VehiculoRepository;
 import com.vans.backend.repository.ConciertosRepository;
@@ -29,6 +30,9 @@ public class ViajesService {
     @Autowired
     private ConciertosRepository conciertosRepository;
 
+    @Autowired
+    private com.vans.backend.repository.AsientosRepository asientosRepository;
+
     @Transactional(readOnly = true)
     public List<Viajes> getAllViajes() {
         return viajesRepository.findAll();
@@ -41,7 +45,6 @@ public class ViajesService {
 
     @Transactional
     public Viajes createViaje(Viajes viaje) {
-        // Asegurarse de que el vehículo y el concierto existen
         Vehiculo vehiculo = vehiculoRepository.findById(viaje.getVehiculo().getVehiculo_id())
                 .orElseThrow(() -> new RuntimeException("Vehículo no encontrado con id: " + viaje.getVehiculo().getVehiculo_id()));
         Conciertos concierto = conciertosRepository.findById(viaje.getConcierto().getConcierto_id())
@@ -50,7 +53,18 @@ public class ViajesService {
         viaje.setVehiculo(vehiculo);
         viaje.setConcierto(concierto);
 
-        return viajesRepository.save(viaje);
+        Viajes viajeGuardado = viajesRepository.save(viaje);
+
+        for (int i = 1; i <= vehiculo.getCapacidad(); i++) {
+            Asientos asiento = new Asientos();
+            asiento.setVehiculo(vehiculo);
+            asiento.setViaje(viajeGuardado);
+            asiento.setNumeroAsiento(String.valueOf(i));
+            asiento.setEstado("disponible");
+            asientosRepository.save(asiento);
+        }
+
+        return viajeGuardado;
     }
 
 
@@ -65,16 +79,15 @@ public class ViajesService {
         dto.setFechaSalida(viaje.getFechaSalida());
         dto.setFechaLlegada(viaje.getFechaLlegada());
         dto.setEstado(viaje.getEstado());
-        // Mapea el vehículo si tienes VehiculoDTO
+
         Vehiculo vehiculo = viaje.getVehiculo();
         if (vehiculo != null) {
             VehiculoDTO vehiculoDTO = new VehiculoDTO();
             vehiculoDTO.setVehiculo_id(vehiculo.getVehiculo_id());
             vehiculoDTO.setPatente(vehiculo.getPatente());
             vehiculoDTO.setModelo(vehiculo.getModelo());
-            vehiculoDTO.setTipo(vehiculo.getModelo()); // Ajusta si tienes tipo
+            vehiculoDTO.setTipo(vehiculo.getModelo()); 
             dto.setVehiculo(vehiculoDTO);
-            // Aquí asignas el nombre de la empresa
             if (vehiculo.getEmpresa() != null) {
                 dto.setEmpresa(vehiculo.getEmpresa().getNombre());
             }

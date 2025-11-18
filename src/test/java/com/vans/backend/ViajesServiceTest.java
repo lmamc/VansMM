@@ -27,6 +27,8 @@ public class ViajesServiceTest {
     private VehiculoRepository vehiculoRepository;
     @Mock
     private ConciertosRepository conciertosRepository;
+    @Mock
+    private com.vans.backend.repository.AsientosRepository asientosRepository;
 
     @InjectMocks
     private ViajesService viajesService;
@@ -51,6 +53,7 @@ public class ViajesServiceTest {
         Viajes viaje = new Viajes();
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setVehiculo_id(1);
+        vehiculo.setCapacidad(10); 
         viaje.setVehiculo(vehiculo);
         Conciertos concierto = new Conciertos();
         concierto.setConcierto_id(2);
@@ -58,9 +61,11 @@ public class ViajesServiceTest {
         when(vehiculoRepository.findById(1)).thenReturn(java.util.Optional.of(vehiculo));
         when(conciertosRepository.findById(2)).thenReturn(java.util.Optional.of(concierto));
         when(viajesRepository.save(any(Viajes.class))).thenReturn(viaje);
+        when(asientosRepository.save(any(com.vans.backend.entity.Asientos.class))).thenReturn(new com.vans.backend.entity.Asientos());
 
         Viajes saved = viajesService.createViaje(viaje);
         assertEquals(1, saved.getVehiculo().getVehiculo_id());
         assertEquals(2, saved.getConcierto().getConcierto_id());
+        verify(asientosRepository, times(10)).save(any(com.vans.backend.entity.Asientos.class));
     }
 }

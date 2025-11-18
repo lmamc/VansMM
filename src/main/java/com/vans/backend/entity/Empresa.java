@@ -33,7 +33,7 @@ public class Empresa {
     private String nombre;
     private String direccion;
     private String horario;
-    private Integer telefono;
+    private String telefono;
 
     public Empresa() {}
 
@@ -61,7 +61,7 @@ public class Empresa {
         return direccion;
     }
 
-    public Integer getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -89,7 +89,7 @@ public class Empresa {
         this.direccion = direccion;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 }

@@ -29,6 +29,9 @@ public class Conciertos {
     @JsonManagedReference("concierto-viajes")
     private List<Viajes> viajes;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @Column(name = "direccion")
     private String direccion;
 
@@ -53,6 +56,10 @@ public class Conciertos {
         return viajes;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -75,6 +82,10 @@ public class Conciertos {
 
     public void setViajes(List<Viajes> viajes) {
         this.viajes = viajes;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setDireccion(String direccion) {

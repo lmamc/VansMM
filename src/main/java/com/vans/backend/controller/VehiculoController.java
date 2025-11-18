@@ -1,7 +1,6 @@
 
 package com.vans.backend.controller;
 
-import com.vans.backend.entity.Asientos;
 import com.vans.backend.entity.Vehiculo;
 import com.vans.backend.entity.Viajes;
 import com.vans.backend.service.VehiculoService;
@@ -58,17 +57,8 @@ public class VehiculoController {
     public Vehiculo vincularVehiculoAViaje(@PathVariable Integer vehiculoId, @PathVariable Integer viajeId) {
         Vehiculo vehiculo = vehiculoService.getVehiculoById(vehiculoId);
         Viajes viaje = vehiculoService.getViajeById(viajeId);
-
-        // Asocia el vehículo al viaje
         viaje.setVehiculo(vehiculo);
         vehiculoService.saveViaje(viaje);
-
-        // Asocia los asientos del vehículo al viaje y guarda cada uno
-        for (Asientos asiento : vehiculo.getAsientos()) {
-            asiento.setViaje(viaje);
-            vehiculoService.saveAsiento(asiento); // Este método debe guardar el asiento
-        }
-
         return vehiculo;
     }
 

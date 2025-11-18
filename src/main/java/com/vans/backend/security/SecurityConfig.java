@@ -41,7 +41,6 @@ public class SecurityConfig {
             .cors(withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                // Permitir peticiones OPTIONS de pre-vuelo de CORS
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                 .requestMatchers("/auth/**", "/usuarios").permitAll()
                 .requestMatchers(HttpMethod.GET, "/conciertos/**").permitAll()
