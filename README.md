@@ -118,9 +118,9 @@ Sistema backend desarrollado con Spring Boot para gestionar traslados en vans ha
 > - Valida que el asiento esté disponible
 > - Actualiza estado del asiento a "reservado"
 > - Decrementa asientos disponibles del viaje
-> - Al cancelar, libera el asiento e incrementa disponibilidad
+> - Al cancelar, libera el asiento e incrementa disponibilidad 
 
-### 💳 Pagos
+### 💳 Pagos (Futura implementación)
 
 | Método | Endpoint | Descripción | Autenticación |
 |--------|----------|-------------|---------------|
